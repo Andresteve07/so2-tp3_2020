@@ -29,3 +29,4 @@ RUN mkdir exec \
         && make \
         && ls -halt
 #RUN ls -halt /app/ejecutable
+CMD ["true"]

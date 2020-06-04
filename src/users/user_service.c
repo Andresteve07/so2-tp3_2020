@@ -5,7 +5,9 @@
 #include <stdio.h>
 #include <signal.h>
 #include <ulfius.h>
-
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <string.h>
 //#define PORT 8080
 
 /**
@@ -22,17 +24,23 @@ int callback_hello_world2 (const struct _u_request * request, struct _u_response
 int main(void) {
     struct _u_instance instance;
     sigset_t myset;
+    struct sockaddr_in bind_address;
+    memset(&bind_address,0,sizeof(bind_address));
+    bind_address.sin_family = AF_INET;
+    bind_address.sin_port = htons(7788);
+    bind_address.sin_addr.s_addr = inet_addr("0.0.0.0");
     // Initialize instance with the port number
-    if (ulfius_init_instance(&instance, PORT, NULL, NULL) != U_OK) {
+    if (ulfius_init_instance(&instance, PORT, &bind_address, NULL) != U_OK) {
         fprintf(stderr, "Error ulfius_init_instance, abort\n");
         return(1);
     }
     // Endpoint list declaration
-    ulfius_add_endpoint_by_val(&instance, "GET", "/helloworld", NULL, 0, &callback_hello_world2, NULL);
+    ulfius_add_endpoint_by_val(&instance, "GET", "/api/users", NULL, 0, &callback_hello_world2, NULL);
 
     // Start the framework
     if (ulfius_start_framework(&instance) == U_OK) {
         printf("Start framework on port %d\n", instance.port);
+        fflush(stdout);
         sigemptyset(&myset);
         sigsuspend(&myset);
     } else {
