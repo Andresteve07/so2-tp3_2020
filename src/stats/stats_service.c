@@ -1,9 +1,7 @@
-/**
- * test.c
- * Small Hello World! example
- * to compile with gcc, run the following command
- * gcc -o test test.c -lulfius
- */
+//
+// Created by steve-urbit on 4/6/20.
+//
+
 #include <stdio.h>
 #include <signal.h>
 #include <ulfius.h>

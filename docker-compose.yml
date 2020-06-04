@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+  builder:
+    image: so2-tp3-builder
+    build: .
+  stats:
+    image: so2-tp3-stats
+    build: src/stats
+    network_mode: "host"
+    ports:
+    - 8080:8080
+  users:
+    image: so2-tp3-users
+    build: src/users
+    network_mode: host
+    ports:
+      - 7788:7788

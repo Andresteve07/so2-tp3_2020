@@ -1,9 +1,7 @@
-/**
- * test.c
- * Small Hello World! example
- * to compile with gcc, run the following command
- * gcc -o test test.c -lulfius
- */
+//
+// Created by steve-urbit on 4/6/20.
+//
+
 #include <stdio.h>
 #include <signal.h>
 #include <ulfius.h>
@@ -13,7 +11,7 @@
 /**
  * Callback function for the web application on /helloworld url call
  */
-int callback_hello_world (const struct _u_request * request, struct _u_response * response, void * user_data) {
+int callback_hello_world2 (const struct _u_request * request, struct _u_response * response, void * user_data) {
     ulfius_set_string_body_response(response, 200, "Hello World!");
     return U_CALLBACK_CONTINUE;
 }
@@ -30,7 +28,7 @@ int main(void) {
         return(1);
     }
     // Endpoint list declaration
-    ulfius_add_endpoint_by_val(&instance, "GET", "/helloworld", NULL, 0, &callback_hello_world, NULL);
+    ulfius_add_endpoint_by_val(&instance, "GET", "/helloworld", NULL, 0, &callback_hello_world2, NULL);
 
     // Start the framework
     if (ulfius_start_framework(&instance) == U_OK) {

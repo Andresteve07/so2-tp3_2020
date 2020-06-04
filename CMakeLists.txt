@@ -5,7 +5,15 @@ include(GNUInstallDirs)
 include(CheckSymbolExists)
 
 set(CMAKE_C_STANDARD 99)
-set(SOURCE_FILES src/main.c)
+set(STATS_SOURCE_FILES
+        src/stats/stats_service.c
+        src/json/frozen.c
+        src/stats/host_stats.c)
+
+set(USERS_SOURCE_FILES
+        src/users/user_service.c
+        src/json/frozen.c
+        src/users/user_manager.c)
 
 # cmake modules
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
@@ -37,9 +45,10 @@ if (YDER_FOUND)
 endif ()
 
 
-add_executable(firstTry ${SOURCE_FILES})
-target_link_libraries(firstTry ${LIBS})
-#add_executable(secondTry ${SOURCE_FILES})
-#target_link_libraries(secondTry ${LIBS})
-target_compile_definitions(firstTry PRIVATE PORT=8080)
-#target_compile_definitions(secondTry PRIVATE PORT=7788)
+add_executable(stats ${STATS_SOURCE_FILES})
+target_link_libraries(stats ${LIBS})
+target_compile_definitions(stats PRIVATE PORT=8080)
+
+add_executable(users ${USERS_SOURCE_FILES})
+target_link_libraries(users ${LIBS})
+target_compile_definitions(users PRIVATE PORT=7788)
