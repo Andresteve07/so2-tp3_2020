@@ -1,43 +1,39 @@
 version: "3"
 services:
-  builder:
-    image: so2-tp3-builder
-    container_name: so2-tp3-builder
+  eam_so2_tp3_builder:
+    image: eam_so2_tp3_builder
+    container_name: eam_so2_tp3_builder
     build: .
-  nginx:
+  eam_so2_tp3_nginx:
     image: nginx:latest
-    container_name: so2-tp3-nginx
-    restart: on-failure
+    container_name: eam_so2_tp3_nginx
+    restart: always
+    depends_on:
+      - eam_so2_tp3_stats
+      - eam_so2_tp3_users
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-    networks:
-      - proxy_net
+      - ./nginx/:/etc/nginx/conf.d/
     links:
-      - so2-tp3-stats
-      - so2-tp3-users
+      - eam_so2_tp3_stats
+      - eam_so2_tp3_users
     ports:
       - 80:80
       - 443:443
-  so2-tp3-stats:
-    image: so2-tp3-stats
-    container_name: so2-tp3-stats
+  eam_so2_tp3_stats:
+    image: eam_so2_tp3_stats
+    container_name: eam_so2_tp3_stats
+    restart: always
     build: src/stats
-    networks:
-      - proxy_net
-    ports:
-    - 8080:8080
     expose:
-      - 8080
-  so2-tp3-users:
-    image: so2-tp3-users
-    container_name: so2-tp3-users
+      - "8080"
+    ports:
+      - 8080:8080
+  eam_so2_tp3_users:
+    image: eam_so2_tp3_users
+    container_name: eam_so2_tp3_users
+    restart: always
     build: src/users
-    networks:
-      - proxy_net
-    ports:
-    - 7788:7788
     expose:
-      - 7788
-networks:
-  proxy_net:
-    driver: bridge
+      - "7788"
+    ports:
+      - 7788:7788

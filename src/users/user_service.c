@@ -28,7 +28,7 @@ int main(void) {
     memset(&bind_address,0,sizeof(bind_address));
     bind_address.sin_family = AF_INET;
     bind_address.sin_port = htons(7788);
-    bind_address.sin_addr.s_addr = inet_addr("0.0.0.0");
+    inet_aton("0.0.0.0", (struct in_addr *) &bind_address.sin_addr.s_addr);
     // Initialize instance with the port number
     if (ulfius_init_instance(&instance, PORT, &bind_address, NULL) != U_OK) {
         fprintf(stderr, "Error ulfius_init_instance, abort\n");

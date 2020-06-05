@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(so2-tp3)
+project(2020_so2_tp3_eam)
 
 include(GNUInstallDirs)
 include(CheckSymbolExists)

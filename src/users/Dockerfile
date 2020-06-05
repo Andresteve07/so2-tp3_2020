@@ -14,6 +14,6 @@ RUN apt-get install -y --no-install-recommends \
         libulfius-dev \
         && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
-COPY --from=so2-tp3-builder /app/exec/stats .
+COPY --from=so2-tp3-builder /app/exec/users .
 RUN ls -halt
-CMD ["./stats"]
+CMD ["./users"]
